@@ -1,0 +1,14 @@
+{
+  "name": "@ebuddy-technical-test/shared-types",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
+  "devDependencies": {
+    "@ebuddy-technical-test/typescript-config": "workspace:*",
+    "typescript": "^5.0.0"
+  }
+}
