@@ -1,11 +1,15 @@
 import { Router } from 'express';
-import { UserController } from '../controller/api';
+import { APIController } from '../controller/api';
 import { authMiddleware } from '../middleware/authMiddleware';
 
 const router = Router();
-const userController = new UserController();
+const apiController = new APIController();
 
-router.get('/profile', authMiddleware, userController.getUserProfile);
-router.patch('/profile', authMiddleware, userController.updateUserProfile);
+router.get('/fetch-user-data', authMiddleware, apiController.getUserProfile);
+router.put(
+  '/update-user-data/:id',
+  authMiddleware,
+  apiController.updateUserProfile
+);
 
 export { router as userRoutes };

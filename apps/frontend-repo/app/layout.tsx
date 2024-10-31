@@ -1,7 +1,13 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
+
+import { Box } from '@mui/material';
+
 import './globals.css';
-import { Provider } from 'react-redux';
+import ThemeProviderWrapper from '../theme/theme_provider';
+import ReduxProvider from '../store/provider';
+import ResetReduxProvider from '../hooks/useResetReduxState';
+import Navbar from '../components/navbar';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -19,16 +25,33 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang='en'>
-      <Provider store={store}>
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
-          {children}
-        </body>
-      </Provider>
+      <ReduxProvider>
+        <ResetReduxProvider>
+          <ThemeProviderWrapper>
+            <body className={`${geistSans.variable} ${geistMono.variable}`}>
+              <Navbar />
+              <Box
+                sx={{
+                  minHeight: '100vh',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  background:
+                    'linear-gradient(45deg, #D3D3D3 30%, #E8E8E8 90%)',
+                  padding: 3
+                }}
+              >
+                {children}
+              </Box>
+            </body>
+          </ThemeProviderWrapper>
+        </ResetReduxProvider>
+      </ReduxProvider>
     </html>
   );
 }

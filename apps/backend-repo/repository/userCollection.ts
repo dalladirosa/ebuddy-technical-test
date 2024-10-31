@@ -1,39 +1,32 @@
 import * as admin from 'firebase-admin';
-import { User, UpdateUserData } from '../entities/user';
+import {
+  UpdateUserData,
+  GetUserData
+} from '@ebuddy-technical-test/shared-types';
 
 export class UserCollection {
-  private collection: admin.firestore.CollectionReference;
+  public collection: admin.firestore.CollectionReference;
 
   constructor() {
     this.collection = admin.firestore().collection('users');
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string): Promise<GetUserData | null> {
     const doc = await this.collection.doc(id).get();
-    if (!doc.exists) return null;
 
+    if (!doc.exists) return null;
     const data = doc.data();
+
     return {
       ...data,
-      id: doc.id,
-      createdAt: data?.createdAt.toDate(),
-      updatedAt: data?.updatedAt.toDate()
-    } as User;
+      id: id
+    } as GetUserData;
   }
 
-  async create(user: Omit<User, 'id'>): Promise<User> {
-    const docRef = this.collection.doc();
-    const userData = {
-      ...user,
-      id: docRef.id,
-      createdAt: new Date(),
-      updatedAt: new Date()
-    };
-    await docRef.set(userData);
-    return userData;
-  }
-
-  async update(id: string, userData: UpdateUserData): Promise<User | null> {
+  async update(
+    id: string,
+    userData: UpdateUserData
+  ): Promise<GetUserData | null> {
     const docRef = this.collection.doc(id);
     const doc = await docRef.get();
 
@@ -48,11 +41,12 @@ export class UserCollection {
 
     const updatedDoc = await docRef.get();
     const data = updatedDoc.data();
+
     return {
       ...data,
-      id: updatedDoc.id,
-      createdAt: data?.createdAt.toDate(),
-      updatedAt: data?.updatedAt.toDate()
-    } as User;
+      id: data?.id,
+      createdAt: data?.createdAt,
+      updatedAt: data?.updatedAt
+    } as GetUserData;
   }
 }

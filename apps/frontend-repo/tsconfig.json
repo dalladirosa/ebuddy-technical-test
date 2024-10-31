@@ -1,12 +1,5 @@
 {
   "extends": "@ebuddy-technical-test/typescript-config/nextjs.json",
-  "compilerOptions": {
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
-  },
   "include": [
     "next-env.d.ts",
     "next.config.mjs",

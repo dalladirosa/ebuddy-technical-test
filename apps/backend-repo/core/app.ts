@@ -1,10 +1,8 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import { initializeFirebase } from '../config/firebaseConfig';
+import { firebase } from '../config/firebaseConfig';
 import { userRoutes } from '../routes/userRoutes';
-
-dotenv.config();
+import { AppOptions, initializeApp } from 'firebase-admin/app';
 
 class App {
   public app: express.Application;
@@ -17,16 +15,23 @@ class App {
   }
 
   private initializeFirebase() {
-    initializeFirebase();
+    try {
+      initializeApp(firebase as AppOptions);
+    } catch (error: any) {
+      if (!/already exists/.test(error.message)) {
+        console.error('Firebase initialization error', error.stack);
+      }
+    }
   }
 
   private initializeMiddlewares() {
-    this.app.use(cors());
+    this.app.use(cors({ origin: '*', credentials: true }));
     this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
   }
 
   private initializeRoutes() {
-    this.app.use('/api/users', userRoutes);
+    this.app.use('/api/v1', userRoutes);
   }
 
   public listen() {

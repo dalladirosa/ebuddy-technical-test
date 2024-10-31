@@ -2,3 +2,4 @@ node_modules
 dist
 .env
 *.log
+ebuddy-technical-test-firebase-admin.json

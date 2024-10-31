@@ -1,3 +1,3 @@
-import { authSlice } from './auth/authSlice';
+import { userSlice } from './user/user_slice';
 
-export const authActions = authSlice.actions;
+export const userActions = userSlice.actions;
