@@ -37,6 +37,7 @@ This Turborepo has some additional tools already setup for you:
 To run this project you need to have these files:
 
 .env for fronted
+
 ```
 NEXT_PUBLIC_API_URL=
 NEXT_PUBLIC_FIREBASE_API_KEY=
@@ -49,6 +50,7 @@ NEXT_PUBLIC_FIREBASE_PROJECT_ID=
 ```
 
 .env for backend
+
 ```
 PORT=
 FIREBASE_TYPE=
@@ -72,6 +74,16 @@ To build all apps and packages, run the following command:
 ```
 cd my-turborepo
 pnpm build
+```
+
+### Run Build
+
+To run build apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm build
+pnpm start
 ```
 
 ### Develop
